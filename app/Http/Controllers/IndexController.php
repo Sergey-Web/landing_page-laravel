@@ -11,7 +11,7 @@ use App\Portfolio;
 
 class IndexController extends Controller
 {
-    public function index() {
-        return view('layouts.index');
+    public function index(Request $request) {
+        return view('main.index');
     }
 }
