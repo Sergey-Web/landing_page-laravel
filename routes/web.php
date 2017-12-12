@@ -11,7 +11,7 @@
 |
 */
 
-Route::middleware(['web'])->group(function() {
+Route::middleware([])->group(function() {
     Route::match(['get', 'post'], '/', 'IndexController@index')->name('home');
     Route::get('page/{alias}', 'PageController@index')->name('page');
 
