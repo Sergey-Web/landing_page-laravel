@@ -10,6 +10,7 @@
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css"> 
 <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css"> 
 <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" type="text/css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
  
 <!--[if lt IE 9]>
     <script src="{{ asset('assets/js/respond-1.1.0.min.js') }}"></script>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ContactRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminMail;
 
 use App\Employee;
 use App\Page;
@@ -31,11 +34,6 @@ class IndexController extends Controller
 
     public function index(Request $request)
     {
-
-        if($request->isMethod('post')) {
-            $this->sandMail($request);
-        }
-
         return view('main.index', [
             'pages'     => $this->pages,
             'employees' => $this->employee,
@@ -46,20 +44,22 @@ class IndexController extends Controller
         ]);
     }
 
-    protected function sendMain($request)
+    public function contact(ContactRequest $request)
     {
-        $this->valForm()
-    }
+        $data = $request->all();
+        $mailAdmin = env('MAIL_ADMIN');
 
-    protected function valForm()
-    {
-        $message = [
-
-        ];
-
-        $this->validate($request, [
-            
-        ]);
+        Mail::to($mailAdmin)->send(new AdminMail($data));
+/*        Mail::send(
+            'layouts.message-admin',
+            ['data' => $data],
+            function($message) use ($data) {
+                $mailAdmin = env('MAIL_ADMIN');
+                $message->from($data['email'], $data['name']);
+                $message->to($mailAdmin)->subject('Question');
+            }
+        );*/
+        return redirect()->route('home')->with(['status' => 'Message sent']);
     }
 
     protected function menuNav()

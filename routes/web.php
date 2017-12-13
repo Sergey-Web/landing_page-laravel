@@ -12,7 +12,8 @@
 */
 
 Route::middleware([])->group(function() {
-    Route::match(['get', 'post'], '/', 'IndexController@index')->name('home');
+    Route::get('/', 'IndexController@index')->name('home');
+    Route::post('/', 'IndexController@contact')->name('contact');
     Route::get('page/{alias}', 'PageController@index')->name('page');
 
     Route::auth();
