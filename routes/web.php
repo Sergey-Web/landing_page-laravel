@@ -15,8 +15,6 @@ Route::middleware([])->group(function() {
     Route::get('/', 'IndexController@index')->name('home');
     Route::post('/', 'IndexController@contact')->name('contact');
     Route::get('page/{alias}', 'PageController@index')->name('page');
-
-    Route::auth();
 });
 
 Route::prefix('admin')->middleware('auth')->group(function() {
