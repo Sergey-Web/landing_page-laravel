@@ -24,4 +24,4 @@ Route::prefix('admin')->middleware('auth')->group(function() {
     Route::resource('services', 'ServicesController');
 });
 
-
+Auth::routes();
