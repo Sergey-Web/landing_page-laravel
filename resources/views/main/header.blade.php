@@ -14,6 +14,17 @@
             <li><a href="#{{ $item['alias'] }}" class="scroll-link">{{ $item['title'] }}</a></li>
             @endif
             @endforeach
+            @if(!Auth::user())
+              <li><a href="/login" class="scroll-link">log in</a></li>
+            @else
+              <li><a class="scroll-link" href="#"
+                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                  Logout
+              </a></li>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+              </form>
+            @endif
           </ul>
       </div>
      </nav>

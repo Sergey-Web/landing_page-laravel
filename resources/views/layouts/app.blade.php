@@ -27,10 +27,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    <div class="logo"><a href="/"><img src="{{ asset('assets/img/logo.png') }}" alt="logo"></a></div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
