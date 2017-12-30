@@ -1,0 +1,20 @@
+html,
+body {
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1000px;
+}
+
+.section {
+    margin: 10px;
+}

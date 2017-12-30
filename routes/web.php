@@ -19,10 +19,10 @@ Route::middleware([])->group(function() {
 
 Route::prefix('admin')->middleware('auth')->group(function() {
     Route::get('/', 'AdminController@index')->name('admin');
-    Route::resource('pages', 'PagesController');
-    Route::resource('portfolio', 'PortfolioController');
-    Route::resource('employees', 'EmployeesController');
-    Route::resource('services', 'ServicesController');
+    Route::resource('/pages', 'PagesController');
+    Route::resource('/services', 'ServicesController');
+    Route::resource('/portfolio', 'PortfolioController');
+    Route::resource('/employees', 'EmployeesController');
 });
 
 Auth::routes();
