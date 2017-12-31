@@ -8,13 +8,28 @@ body {
     margin-bottom: 20px;
 }
 
+.logo {
+    margin: 10px 0;
+}
+
 .container {
+    max-width: 1000px;
+}
+
+.content {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    max-width: 1000px;
 }
 
 .section {
     margin: 10px;
+}
+
+.btn-back {
+    width: 100%;
+}
+
+.wrap-btn-main {
+    text-align: center;
 }

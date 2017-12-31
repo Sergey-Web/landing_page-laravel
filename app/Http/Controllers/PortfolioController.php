@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Portfolio;
+use App\Helpers;
 
 class PortfolioController extends Controller
 {
@@ -13,7 +15,22 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        //
+        $pages = Portfolio::all();
+        $nameSection = 'portfolio';
+        if(count($pages) == 0) {
+            return 'empty';
+        }
+        $dataPages = $pages->first()->toArray();
+        $titleColumns = Helpers::delKeysFromArray($dataPages, ['id', 'name', 'created_at', 'updated_at']);
+        foreach($pages->toArray() as $page) {
+            $sections[] = Helpers::delKeysFromArray($page, ['name', 'created_at', 'updated_at']);
+        }
+
+        return view('admin.single-section', [
+            'titleColumns' => $titleColumns,
+            'sections'     => $sections,
+            'nameSection'  => $nameSection
+        ]);
     }
 
     /**
@@ -79,6 +96,7 @@ class PortfolioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Portfolio::destroy($id);
+        return redirect()->back();
     }
 }

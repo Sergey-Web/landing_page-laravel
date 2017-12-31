@@ -8,19 +8,25 @@
         <div id="main-nav" class="collapse navbar-collapse navStyle">
           <ul class="nav navbar-nav" id="mainNav">
             @foreach($menu as $key => $item)
-            @if($key === 0)
+              @if($key === 0)
             <li class="active"><a href="#{{ $item['alias'] }}" class="scroll-link">{{ $item['title'] }}</a></li>
-            @else
+              @else
             <li><a href="#{{ $item['alias'] }}" class="scroll-link">{{ $item['title'] }}</a></li>
-            @endif
+              @endif
             @endforeach
+
             @if(!Auth::user())
               <li><a href="/login" class="scroll-link">log in</a></li>
             @else
-              <li><a class="scroll-link" href="#"
+              <li>
+                <a class="scroll-link" href="#"
                  onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   Logout
-              </a></li>
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('admin') }}" class="btn btn-danger">Admin Panel</a>
+              </li>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}
               </form>

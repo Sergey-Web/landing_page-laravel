@@ -1,38 +1,42 @@
 @extends('layouts.admin')
 
 @section('header')
-    <h1>Section single-page</h1>
+<h1>Section single-page</h1>
 @endsection
 
 @section('content')
 <table class="table table-hover">
-  <thead>
-    <tr class="success">
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr class="success">
+            <th scope="col">#</th>
+            @foreach($titleColumns as $nameColumn => $titleColumn)
+            <th scope="col">{{ $nameColumn }}</th>
+            @endforeach
+            <th scope="col">delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($sections as $keySection => $section)
+        <tr>
+            <th scope="row">{{ $keySection + 1 }}</th>
+            @foreach($section as $keySection => $item)
+                @if($keySection == 'id')
+                    @continue
+                @endif
+            <td>{{ $item }}</td>
+            @endforeach
+            <td>
+                <form action="{{ route($nameSection.'.destroy', $section['id']) }}" accept-charset="UTF-8" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                   <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 </table>
+<div class="btn-back">
+    <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
+</div>
 @endsection

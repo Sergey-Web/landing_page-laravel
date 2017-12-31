@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+use App\Helpers;
 
 class EmployeesController extends Controller
 {
@@ -12,8 +14,23 @@ class EmployeesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+        {
+        $pages = Employee::all();
+        $nameSection = 'portfolio';
+        if(count($pages) == 0) {
+            return 'empty';
+        }
+        $dataPages = $pages->first()->toArray();
+        $titleColumns = Helpers::delKeysFromArray($dataPages, ['id', 'name', 'created_at', 'updated_at']);
+        foreach($pages->toArray() as $page) {
+            $sections[] = Helpers::delKeysFromArray($page, ['name', 'created_at', 'updated_at']);
+        }
+
+        return view('admin.single-section', [
+            'titleColumns' => $titleColumns,
+            'sections'     => $sections,
+            'nameSection'  => $nameSection
+        ]);
     }
 
     /**
@@ -79,6 +96,7 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Employee::destroy($id);
+        return redirect()->back();
     }
 }

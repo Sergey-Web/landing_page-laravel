@@ -12,9 +12,13 @@
     <header class="header">
     @yield('header')
     </header>
-
     <div class="container">
-    @yield('content')
+        <div class="wrap-btn-main">
+            <a href="{{ route('home') }}" class="btn btn-danger">Main Page</a>
+        </div>
+        <div class="content">
+            @yield('content')
+        </div>
     </div>
 </body>
 </head>

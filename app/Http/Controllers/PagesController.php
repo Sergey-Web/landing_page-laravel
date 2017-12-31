@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Page;
+use App\Helpers;
 
 class PagesController extends Controller
 {
@@ -14,7 +15,22 @@ class PagesController extends Controller
      */
     public function index()
     {
-        return view('admin.single-section');
+        $pages = Page::all();
+        $nameSection = 'pages';
+        if(count($pages) == 0) {
+            return 'empty';
+        }
+        $dataPages = $pages->first()->toArray();
+        $titleColumns = Helpers::delKeysFromArray($dataPages, ['id', 'name', 'created_at', 'updated_at']);
+        foreach($pages->toArray() as $page) {
+            $sections[] = Helpers::delKeysFromArray($page, ['name', 'created_at', 'updated_at']);
+        }
+
+        return view('admin.single-section', [
+            'titleColumns' => $titleColumns,
+            'sections'     => $sections,
+            'nameSection'  => $nameSection
+        ]);
     }
 
     /**
@@ -57,7 +73,7 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -69,7 +85,7 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -80,6 +96,7 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Page::destroy($id);
+        return redirect()->back();
     }
 }

@@ -8,6 +8,6 @@
 @section('content')
     <a href="{{ route('pages.index') }}" class="section btn btn-primary">Single-Page</a>
     <a href="{{ route('services.index') }}" class="section btn btn-primary">Services</a>
-    <a href="{{ route('employees.index') }}" class="section btn btn-primary">Portfolio</a>
-    <a href="{{ route('portfolio.index') }}" class="section btn btn-primary">Employees</a>
+    <a href="{{ route('portfolio.index') }}" class="section btn btn-primary">Portfolio</a>
+    <a href="{{ route('employees.index') }}" class="section btn btn-primary">Employees</a>
 @endsection

@@ -27,7 +27,9 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <div class="logo"><a href="/"><img src="{{ asset('assets/img/logo.png') }}" alt="logo"></a></div>
+                    <div class="logo" style="margin: 10px 0">
+                        <a href="/"><img src="{{ asset('assets/img/logo.png') }}" alt="logo"></a>
+                    </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
