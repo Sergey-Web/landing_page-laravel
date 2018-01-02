@@ -14,9 +14,9 @@ class EmployeesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-        {
+    {
         $pages = Employee::all();
-        $nameSection = 'portfolio';
+        $nameSection = Helpers::getPageName(request()->path());
         if(count($pages) == 0) {
             return 'empty';
         }

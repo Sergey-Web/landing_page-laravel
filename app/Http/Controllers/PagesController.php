@@ -16,7 +16,7 @@ class PagesController extends Controller
     public function index()
     {
         $pages = Page::all();
-        $nameSection = 'pages';
+        $nameSection = Helpers::getPageName(request()->path());
         if(count($pages) == 0) {
             return 'empty';
         }

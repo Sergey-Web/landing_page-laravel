@@ -5,14 +5,18 @@
 @endsection
 
 @section('content')
+<div class="wrap-btn-add">
+    <a href="{{ route($nameSection.'.create') }}" class="btn btn-success">Create New</a>
+</div>
 <table class="table table-hover">
     <thead>
         <tr class="success">
-            <th scope="col">#</th>
+            <th>#</th>
             @foreach($titleColumns as $nameColumn => $titleColumn)
-            <th scope="col">{{ $nameColumn }}</th>
+            <th>{{ $nameColumn }}</th>
             @endforeach
-            <th scope="col">delete</th>
+            <th>edit</th>
+            <th>delete</th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +30,9 @@
             <td>{{ $item }}</td>
             @endforeach
             <td>
+                <a href="#" class="btn btn-info">Edit</a>
+            </td>
+            <td>
                 <form action="{{ route($nameSection.'.destroy', $section['id']) }}" accept-charset="UTF-8" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
@@ -36,7 +43,7 @@
         @endforeach
     </tbody>
 </table>
-<div class="btn-back">
+<div class="wrap-btn-back">
     <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
 </div>
 @endsection

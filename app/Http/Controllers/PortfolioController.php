@@ -16,7 +16,7 @@ class PortfolioController extends Controller
     public function index()
     {
         $pages = Portfolio::all();
-        $nameSection = 'portfolio';
+        $nameSection = Helpers::getPageName(request()->path());
         if(count($pages) == 0) {
             return 'empty';
         }

@@ -16,7 +16,7 @@ class ServicesController extends Controller
     public function index()
     {
         $pages = Service::all();
-        $nameSection = 'services';
+        $nameSection = Helpers::getPageName(request()->path());
         if(count($pages) == 0) {
             return 'empty';
         }

@@ -16,4 +16,12 @@ class Helpers extends Model
         
         return $arr;
     }
+
+    public static function getPageName($request)
+    {
+        $arrUrl = explode('/',$request);
+        $page = $arrUrl[count($arrUrl) - 1];
+
+        return $page;
+    }
 }
