@@ -38,3 +38,8 @@ body {
     text-align: center;
     margin: 30px 0;
 }
+
+.table-head__col--del,
+.table-head__col--edit {
+    width: 1%;
+}

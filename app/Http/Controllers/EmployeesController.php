@@ -16,12 +16,18 @@ class EmployeesController extends Controller
     public function index()
     {
         $pages = Employee::all();
-        $nameSection = Helpers::getPageName(request()->path());
+        $nameSection = Helpers::getNamePage(request()->path());
+        $titleColumns = Helpers::getNameColumn($nameSection, ['id', 'name', 'created_at', 'updated_at']);
+
         if(count($pages) == 0) {
-            return 'empty';
+            return view('admin.single-section', [
+                'titleColumns' => $titleColumns,
+                'sections'     => FALSE,
+                'nameSection'  => $nameSection
+             ]);
         }
+
         $dataPages = $pages->first()->toArray();
-        $titleColumns = Helpers::delKeysFromArray($dataPages, ['id', 'name', 'created_at', 'updated_at']);
         foreach($pages->toArray() as $page) {
             $sections[] = Helpers::delKeysFromArray($page, ['name', 'created_at', 'updated_at']);
         }
@@ -40,7 +46,10 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        $nameSection = Helpers::getNamePage(request()->path());
+        $titleColumns = Helpers::getNameColumn($nameSection, ['id', 'name', 'created_at', 'updated_at']);
+
+        return view('admin.add-section', ['nameSection' => $nameSection, 'titleColumns' => $titleColumns]);
     }
 
     /**
