@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+
+@if (session('access'))
+<div class="alert alert-success">
+    <span>{{ session('access') }}</span>
+</div>
+@endif
+
 <div class="wrap-btn-add">
     <a href="{{ route($nameSection.'.create') }}" class="btn btn-success">Create New</a>
 </div>
@@ -21,15 +28,15 @@
         </tr>
     </thead>
     <tbody>
-            @foreach($sections as $keySection => $section)
+    @foreach($sections as $keySection => $section)
         <tr class="table-body__row">
             <td class="table-body__col">{{ $keySection + 1 }}</td>
-            @foreach($section as $keySection => $item)
-                @if($keySection == 'id')
-                    @continue
-                @endif
+        @foreach($section as $keySection => $item)
+                    @if($keySection == 'id')
+                        @continue
+                    @endif
             <td class="table-body__col">{{ $item }}</td>
-            @endforeach
+        @endforeach
             <td class="table-body__col">
                 <a href="#" class="btn btn-info">Edit</a>
             </td>
@@ -41,7 +48,7 @@
                 </form>
             </td>
         </tr>
-            @endforeach
+    @endforeach
     </tbody>
 </table>
 @else

@@ -44,7 +44,7 @@ class IndexController extends Controller
         ]);
     }
 
-    public function contact(ContactRequest $request)
+    public function contact(Request $request)
     {
         $data = $request->all();
         $mailAdmin = env('MAIL_ADMIN');

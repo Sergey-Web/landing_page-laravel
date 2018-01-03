@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Validator;
 
 class Helpers extends Model
 {
@@ -17,6 +18,17 @@ class Helpers extends Model
         return array_diff($columns, $keysDel);
     }
 
+    public static function delKeysFromArray($arr, array $arrKeysDel) {
+        foreach($arrKeysDel as $key) {
+            $keyDel = array_key_exists($key, $arr);
+            if($keyDel) {
+                unset($arr[$key]);
+            }
+        }
+        
+        return $arr;
+    }
+
     public static function getNamePage($request)
     {
         $arrUrl = explode('/',$request);
@@ -25,8 +37,31 @@ class Helpers extends Model
         return $page;
     }
 
-    public static function bildForm()
+    public static function valFieldForm($request, $table, $fields)
     {
+        foreach($fields as $field) {
+            switch($field):
+                case('images'):
+                    $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    break;
+                case('icon'):
+                    $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    break;
+                case('alias'):
+                    $role[$field] = 'required|unique:pages';
+                    break;
+                case('text'):
+                    $role[$field] = 'required|max:1000';
+                    break;
+                default:
+                    $role[$field] = 'required|max:50';
+                    break;
+            endswitch;
+        }
 
+        Validator::make($request, $role)->validate();
+
+        DB::table($table)->insert($request);
+        return redirect()->route($table.'.index')->with(['access' => 'Save']);
     }
 }

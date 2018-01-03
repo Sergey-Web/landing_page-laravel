@@ -26,8 +26,7 @@ class ServicesController extends Controller
                 'nameSection'  => $nameSection
              ]);
         }
-
-        $dataPages = $pages->first()->toArray();
+        
         foreach($pages->toArray() as $page) {
             $sections[] = Helpers::delKeysFromArray($page, ['name', 'created_at', 'updated_at']);
         }
@@ -46,7 +45,10 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        //
+        $nameSection = Helpers::getNamePage(request()->path());
+        $titleColumns = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+
+        return view('admin.create-section', ['nameSection' => $nameSection, 'titleColumns' => $titleColumns]);
     }
 
     /**
@@ -57,7 +59,10 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nameSection = Helpers::getNamePage(request()->path());
+        $fields = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+
+        return Helpers::valFieldForm($request->except('_token'), $nameSection, $fields);
     }
 
     /**
