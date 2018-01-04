@@ -62,7 +62,7 @@ class ServicesController extends Controller
         $nameSection = Helpers::getNamePage(request()->path());
         $fields = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
 
-        return Helpers::valFieldForm($request->except('_token'), $nameSection, $fields);
+        return Helpers::valFieldForm($request, $nameSection, $fields);
     }
 
     /**

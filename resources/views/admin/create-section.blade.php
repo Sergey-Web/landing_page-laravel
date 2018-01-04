@@ -15,13 +15,12 @@
     </ul>
 </div>
 @endif
-
+<div class="wrap-btn-back">
+    <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
+</div>
 <form class="form-create" action="{{ route($nameSection.'.store') }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
     @each('admin.create-handler',$titleColumns, 'column')
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
-<div class="wrap-btn-back">
-    <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
-</div>
 @endsection

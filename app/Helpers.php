@@ -43,25 +43,38 @@ class Helpers extends Model
             switch($field):
                 case('images'):
                     $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    $file = $request->file('images');
                     break;
                 case('icon'):
                     $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    $file = $request->file('icon');
                     break;
                 case('alias'):
                     $role[$field] = 'required|unique:pages';
+                    $data[$field] = $request->all()[$field];
                     break;
                 case('text'):
                     $role[$field] = 'required|max:1000';
+                    $data[$field] = $request->all()[$field];
                     break;
                 default:
                     $role[$field] = 'required|max:50';
+                    $data[$field] = $request->all()[$field];
                     break;
             endswitch;
         }
 
-        Validator::make($request, $role)->validate();
+        Validator::make($request->except('_token'), $role)->validate();
 
-        DB::table($table)->insert($request);
+        DB::table($table)->insert($request->except('_token'));
+
+        if($file) {
+            $imgName = substr(
+                md5(microtime(true)
+            ), -15);
+
+            $file->move(public_path().'/assets/img', $imgName);
+        }
         return redirect()->route($table.'.index')->with(['access' => 'Save']);
     }
 }

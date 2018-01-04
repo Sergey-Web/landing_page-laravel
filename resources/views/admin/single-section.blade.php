@@ -14,7 +14,9 @@
 
 <div class="wrap-btn-add">
     <a href="{{ route($nameSection.'.create') }}" class="btn btn-success">Create New</a>
+    <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
 </div>
+
 @if($sections != FALSE)
 <table class="table table-hover">
     <thead class="table-head">
@@ -54,7 +56,5 @@
 @else
 <h3>EMPTY SECTION</h3>
 @endif
-<div class="wrap-btn-back">
-    <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
-</div>
+
 @endsection
