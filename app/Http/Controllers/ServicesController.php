@@ -107,7 +107,9 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
+        Helpers::delImgFile( Service::find($id)->toArray() );
         Service::destroy($id);
+
         return redirect()->back();
     }
 }

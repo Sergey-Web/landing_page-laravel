@@ -40,7 +40,7 @@
             <td class="table-body__col">{{ $item }}</td>
         @endforeach
             <td class="table-body__col">
-                <a href="#" class="btn btn-info">Edit</a>
+                <a href="{{ route($nameSection.'.edit', $section['id']) }}" class="btn btn-info">Edit</a>
             </td>
             <td class="table-body__col">
                 <form action="{{ route($nameSection.'.destroy', $section['id']) }}" accept-charset="UTF-8" method="POST">

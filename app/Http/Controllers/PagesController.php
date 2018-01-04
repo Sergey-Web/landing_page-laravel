@@ -107,7 +107,9 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
+        Helpers::delImgFile( Page::find($id)->toArray() );
         Page::destroy($id);
+
         return redirect()->back();
     }
 }

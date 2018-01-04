@@ -107,7 +107,9 @@ class PortfolioController extends Controller
      */
     public function destroy($id)
     {
+        Helpers::delImgFile( Portfolio::find($id)->toArray() );
         Portfolio::destroy($id);
+
         return redirect()->back();
     }
 }

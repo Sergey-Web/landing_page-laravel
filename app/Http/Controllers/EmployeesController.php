@@ -84,7 +84,15 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $nameSection = Helpers::getNamePage(request()->path());
+        $titleColumns = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+        $arrEmployee = Employee::find($id)->toArray();
+
+        dd(array_fill(['id', 'created_at', 'updated_at'], 'test'));
+        dd(array_diff_key($arrEmployee, array_fill(['id', 'created_at', 'updated_at'], '') ));
+        dd(array_diff(Employee::find($id)->toArray(), ['id', 'created_at', 'updated_at']));
+
+        return view('admin.edit-section', ['id' => $id,'nameSection' => $nameSection, 'titleColumns' => $titleColumns]);
     }
 
     /**
