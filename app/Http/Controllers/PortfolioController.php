@@ -62,7 +62,7 @@ class PortfolioController extends Controller
         $nameSection = Helpers::getNamePage(request()->path());
         $fields = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
 
-        return Helpers::valFieldForm($request, $nameSection, $fields);
+        return Helpers::saveForm($request, $nameSection, $fields);
     }
 
     /**

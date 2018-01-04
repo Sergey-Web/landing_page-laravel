@@ -62,7 +62,7 @@ class EmployeesController extends Controller
         $nameSection = Helpers::getNamePage(request()->path());
         $fields = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
 
-        return Helpers::valFieldForm($request, $nameSection, $fields);
+        return Helpers::saveForm($request, $nameSection, $fields);
     }
 
     /**
@@ -107,7 +107,9 @@ class EmployeesController extends Controller
      */
     public function destroy($id)
     {
+        Helpers::delImgFile( Employee::find($id)->toArray() );
         Employee::destroy($id);
+
         return redirect()->back();
     }
 }
