@@ -20,7 +20,7 @@
 </div>
 <form class="form-edit" action="{{ route($nameSection.'.update', $id) }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
-    @each('admin.create-handler',$titleColumns, 'column')
+    @each('admin.edit-handler',$arrData, 'column')
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
 @endsection
