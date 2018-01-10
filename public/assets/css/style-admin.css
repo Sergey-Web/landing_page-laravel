@@ -47,16 +47,19 @@ body {
     width: 1%;
 }
 
-.form-create {
+.form-create,
+.form-edit {
     width: 50%;
     display: flex;
     flex-direction: column;
 }
 
+.form-edit__textarea-text,
 .form-create__textarea-text {
     width: 100%;
 }
 
+.form-edit__input,
 .form-create__input {
     width: 100%
 }

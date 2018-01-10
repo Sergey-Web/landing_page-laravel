@@ -18,9 +18,12 @@
 <div class="wrap-btn-back">
     <a href="{{ route('admin') }}" class='btn btn-primary'>Back</a>
 </div>
+
 <form class="form-edit" action="{{ route($nameSection.'.update', $id) }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
-    @each('admin.edit-handler',$arrData, 'column')
+    @foreach($arrData as $keyColumn => $column)
+        @include('admin.edit-handler')
+    @endforeach
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
 @endsection
