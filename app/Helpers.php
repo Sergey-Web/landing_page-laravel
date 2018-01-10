@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 use DB;
 use Validator;
 use Storage;
@@ -11,6 +12,7 @@ use Image;
 
 class Helpers extends Model
 {
+    private static $_id;
     private static $_role;
     private static $_dataPost;
     private static $_img;
@@ -41,7 +43,7 @@ class Helpers extends Model
 
                     break;
                 case('alias'):
-                    $role[$field] = 'required|unique:pages';
+                    $role[$field] = ['required', Rule::unique(self::$_table)->ignore(self::$_id)];
                     $dataPost[$field] = $fieldsData[$field];
 
                     break;
@@ -70,10 +72,26 @@ class Helpers extends Model
             md5(microtime(true)
             ), -15);
 
-        $imgName .= '.'.explode('/', $file->getClientMimeType())[1];
+        $imgName .= '.' . explode('/', $file->getClientMimeType())[1];
         self::$_generateImgName = $imgName;
 
         return $imgName;
+    }
+
+    private static function _delImgByName()
+    {
+        foreach(self::$_dbImgs as $valField) {
+            if(array_key_exists($valField, self::$_fieldsData)) {
+                $existsImg[] = $valField;
+            }
+        }
+
+        $existsImg = implode(',', $existsImg);
+
+        $getNameImg = DB::table(self::$_table)->select($existsImg)->where('id', self::$_id)->first();
+        foreach($getNameImg as $nameImg) {
+            File::delete(public_path().'/assets/img/'.$nameImg);
+        }
     }
 
     public static function getNameColumn($table, array $keysDel = [])
@@ -106,24 +124,9 @@ class Helpers extends Model
         return $page;
     }
 
-    private static function _delImgByName($id)
-    {
-        foreach(self::$_dbImgs as $valField) {
-            if(array_key_exists($valField, self::$_fieldsData)) {
-                $existsImg[] = $valField;
-            }
-        }
-
-        $existsImg = implode(',', $existsImg);
-
-        $getNameImg = DB::table(self::$_table)->select($existsImg)->where('id',$id)->first();
-        foreach($getNameImg as $nameImg) {
-            File::delete(public_path().'/assets/img/'.$nameImg);
-        }
-    }
-
     public static function saveForm($fieldsData, $table, $fieldsName, $id = FALSE)
     {
+        self::$_id = $id;
         self::$_fieldsData = $fieldsData;
         self::$_table = $table;
         self::_getRolesFile($fieldsName);
