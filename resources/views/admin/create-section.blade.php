@@ -20,7 +20,7 @@
 </div>
 <form class="form-create" action="{{ route($nameSection.'.store') }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
-    @each('admin.create-handler',$titleColumns, 'column')
+    @each('admin.handler-field-create',$titleColumns, 'column')
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
 @endsection

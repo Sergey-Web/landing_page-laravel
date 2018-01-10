@@ -21,8 +21,9 @@
 
 <form class="form-edit" action="{{ route($nameSection.'.update', $id) }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
+    {{ method_field('PUT') }}
     @foreach($arrData as $keyColumn => $column)
-        @include('admin.edit-handler')
+        @include('admin.handler-field-edit')
     @endforeach
     <button type="submit" class="btn btn-success">Submit</button>
 </form>

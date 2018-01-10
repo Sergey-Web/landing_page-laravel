@@ -7,6 +7,7 @@ use DB;
 use Validator;
 use Storage;
 use File;
+use Image;
 
 class Helpers extends Model
 {
@@ -14,35 +15,45 @@ class Helpers extends Model
     private static $_dataPost;
     private static $_img;
     private static $_generateImgName;
-    private static $_request;
+    private static $_fieldsData;
     private static $_dbImgs = ['images', 'icon'];
+    private static $_table;
 
     private static function _getRolesFile($fields)
     {
-        $request = self::$_request;
+        $fieldsData = self::$_fieldsData;
         foreach($fields as $field) {
             switch($field):
                 case('images'):
-                    $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    if(!isset($fieldsData[$field])) break;
+
+                    $role[$field] = 'max:1024|mimes:jpeg,bmp,png';
                     $dataPost[$field] = self::_imgName($field);
-                    self::$_img = $request->file($field);
+                    self::$_img = $fieldsData[$field];
+
                     break;
                 case('icon'):
-                    $role[$field] = 'required|max:1024|mimes:jpeg,bmp,png';
+                    if(!isset($fieldsData[$field])) break;
+
+                    $role[$field] = 'max:1024|mimes:jpeg,bmp,png';
                     $dataPost[$field] = self::_imgName($field);
-                    self::$_img = $request->file($field);
+                    self::$_img = $fieldsData[$field];
+
                     break;
                 case('alias'):
                     $role[$field] = 'required|unique:pages';
-                    $dataPost[$field] = $request->input($field);
+                    $dataPost[$field] = $fieldsData[$field];
+
                     break;
                 case('text'):
                     $role[$field] = 'required|max:1000';
-                    $dataPost[$field] = $request->input($field);
+                    $dataPost[$field] = $fieldsData[$field];
+
                     break;
                 default:
                     $role[$field] = 'required|max:50';
-                    $dataPost[$field] = $request->input($field);
+                    $dataPost[$field] = $fieldsData[$field];
+
                     break;
             endswitch;
         }
@@ -53,8 +64,8 @@ class Helpers extends Model
 
     private static function _imgName($field)
     {
-        $request = self::$_request;
-        $file = $request->file($field);
+        $fieldsData = self::$_fieldsData;
+        $file = $fieldsData[$field];
         $imgName = substr(
             md5(microtime(true)
             ), -15);
@@ -75,7 +86,8 @@ class Helpers extends Model
         return array_diff($columns, $keysDel);
     }
 
-    public static function delKeysFromArray($arr, array $arrKeysDel) {
+    public static function delKeysFromArray($arr, array $arrKeysDel)
+    {
         foreach($arrKeysDel as $key) {
             $keyDel = array_key_exists($key, $arr);
             if($keyDel) {
@@ -94,14 +106,38 @@ class Helpers extends Model
         return $page;
     }
 
-    public static function saveForm($request, $table, $fields)
+    private static function _delImgByName($id)
     {
-        self::$_request = $request;
-        self::_getRolesFile($fields);
+        foreach(self::$_dbImgs as $valField) {
+            if(array_key_exists($valField, self::$_fieldsData)) {
+                $existsImg[] = $valField;
+            }
+        }
 
-        Validator::make($request->except('_token'), self::$_role)->validate();
+        $existsImg = implode(',', $existsImg);
 
-        DB::table($table)->insert(self::$_dataPost);
+        $getNameImg = DB::table(self::$_table)->select($existsImg)->where('id',$id)->first();
+        foreach($getNameImg as $nameImg) {
+            File::delete(public_path().'/assets/img/'.$nameImg);
+        }
+    }
+
+    public static function saveForm($fieldsData, $table, $fieldsName, $id = FALSE)
+    {
+        self::$_fieldsData = $fieldsData;
+        self::$_table = $table;
+        self::_getRolesFile($fieldsName);
+
+        Validator::make($fieldsData, self::$_role)->validate();
+
+        if($id) {
+            if(self::$_img) {
+                self::_delImgByName($id);
+            }
+            DB::table($table)->where('id', $id)->update(self::$_dataPost);
+        } else {
+            DB::table($table)->insert(self::$_dataPost);
+        }
 
         //Save file image
         if(self::$_img) {

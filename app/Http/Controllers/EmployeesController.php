@@ -59,10 +59,11 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $nameSection = Helpers::getNamePage(request()->path());
-        $fields = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+        $nameSection = Helpers::getNamePage($request->path());
+        $fieldsName = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+        $fieldsData = $request->except('_token');
 
-        return Helpers::saveForm($request, $nameSection, $fields);
+        return Helpers::saveForm($fieldsData, $nameSection, $fieldsName);
     }
 
     /**
@@ -88,7 +89,6 @@ class EmployeesController extends Controller
         $arrEmployee = Employee::find($id)->toArray();
         $arrData = Helpers::delKeysFromArray($arrEmployee, ['id', 'created_at', 'updated_at']);
 
-
         return view('admin.edit-section', ['id' => $id,'nameSection' => $nameSection, 'arrData' => $arrData]);
     }
 
@@ -96,12 +96,16 @@ class EmployeesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $nameSection = Helpers::getNamePage($request->path());
+        $fieldsName = Helpers::getNameColumn($nameSection, ['id', 'created_at', 'updated_at']);
+        $fieldsData = $request->except(['_token', '_method']);
+
+        return Helpers::saveForm($fieldsData, $nameSection, $fieldsName, $id);
     }
 
     /**
