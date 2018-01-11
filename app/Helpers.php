@@ -12,13 +12,13 @@ use Image;
 
 class Helpers extends Model
 {
+    private const IMG = ['images', 'icon'];
     private static $_id;
     private static $_role;
     private static $_dataPost;
     private static $_img;
     private static $_generateImgName;
     private static $_fieldsData;
-    private static $_dbImgs = ['images', 'icon'];
     private static $_table;
 
     private static function _getRolesFile($fields)
@@ -80,7 +80,7 @@ class Helpers extends Model
 
     private static function _delImgByName()
     {
-        foreach(self::$_dbImgs as $valField) {
+        foreach(self::IMG as $valField) {
             if(array_key_exists($valField, self::$_fieldsData)) {
                 $existsImg[] = $valField;
             }
@@ -152,7 +152,7 @@ class Helpers extends Model
 
     public static function delImgFile($data)
     {
-        foreach(self::$_dbImgs as $img) {
+        foreach(self::IMG as $img) {
             if(array_key_exists($img, $data)) {
                 $existsImgs[] = $data[$img];
             }

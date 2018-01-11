@@ -44,8 +44,8 @@
           <div class="form">
             <form action="{{ route('home') }}" method="POST">
               {{ csrf_field() }}
-              <input class="input-text" type="text" name="name" value="{{ old('name') }}">
-              <input class="input-text" type="text" name="email" value="{{ old('email') }}">
+              <input class="input-text" type="text" name="name" value="{{ old('name') }}" placeholder="Name *">
+              <input class="input-text" type="text" name="email" value="{{ old('email') }}" placeholder="Email *">
               <textarea class="input-text text-area" cols="0" rows="0" name="text" value="{{ old('text') }}" placeholder="Your Message *"></textarea>
               <input class="input-btn" type="submit">
             </form>

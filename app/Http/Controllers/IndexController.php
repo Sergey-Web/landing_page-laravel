@@ -44,21 +44,12 @@ class IndexController extends Controller
         ]);
     }
 
-    public function contact(Request $request)
+    public function contact(ContactRequest $request)
     {
         $data = $request->all();
         $mailAdmin = env('MAIL_ADMIN');
-
+        
         Mail::to($mailAdmin)->send(new AdminMail($data));
-/*        Mail::send(
-            'layouts.message-admin',
-            ['data' => $data],
-            function($message) use ($data) {
-                $mailAdmin = env('MAIL_ADMIN');
-                $message->from($data['email'], $data['name']);
-                $message->to($mailAdmin)->subject('Question');
-            }
-        );*/
         return redirect()->route('home')->with(['status' => 'Message sent']);
     }
 
