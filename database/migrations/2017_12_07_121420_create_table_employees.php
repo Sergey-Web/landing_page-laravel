@@ -14,7 +14,7 @@ class CreateTableEmployees extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name', 255);
             $table->string('position', 100);
             $table->string('images', 100);

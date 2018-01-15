@@ -14,7 +14,7 @@ class CreateTablePorfolio extends Migration
     public function up()
     {
         Schema::create('portfolio', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name', 100);
             $table->string('images', 100)->nullable();
             $table->string('tags', 100);
